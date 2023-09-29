@@ -8,37 +8,38 @@ import { NavigationContainer } from '@react-navigation/native';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import FavouritesScreen from './screens/FavouritesScreen';
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
+import FavouritesContextProvider from "./store/context/FavouriteContext";
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
 
-const DrawerNavigator =()=>{
+const DrawerNavigator = () => {
   return <Drawer.Navigator screenOptions={{
     headerStyle: { backgroundColor: 'black' },
     headerTintColor: 'white',
-    sceneContainerStyle : {
+    sceneContainerStyle: {
       backgroundColor: 'black'
     },
-    drawerContentStyle : {
-      backgroundColor :'black',
+    drawerContentStyle: {
+      backgroundColor: 'black',
     },
-    drawerInactiveTintColor :'white',
-    drawerActiveTintColor :'black',
-    drawerActiveBackgroundColor :'white'
+    drawerInactiveTintColor: 'white',
+    drawerActiveTintColor: 'black',
+    drawerActiveBackgroundColor: 'white'
 
 
   }}>
     <Drawer.Screen name='Categories' component={CategoryScreen} options={{
-    title :'All Categories',
-    drawerIcon :({color ,size})=> <Ionicons name="list" size={size} color={color} />
-    }}/>
+      title: 'All Categories',
+      drawerIcon: ({ color, size }) => <Ionicons name="list" size={size} color={color} />
+    }} />
     <Drawer.Screen name='Favourites' component={FavouritesScreen}
-    options={{
-      title :'Favourites',
-      drawerIcon :({color ,size})=> <Ionicons name="star" size={size} color={color} />
+      options={{
+        title: 'Favourites',
+        drawerIcon: ({ color, size }) => <Ionicons name="star" size={size} color={color} />
       }}
-      />
+    />
   </Drawer.Navigator>
 }
 
@@ -46,6 +47,7 @@ export default function App() {
   return (
     <>
       <StatusBar style='light' />
+      <FavouritesContextProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
           headerStyle: { backgroundColor: 'black' },
@@ -56,15 +58,15 @@ export default function App() {
         }}>
           <Stack.Screen name="Drawer" component={DrawerNavigator} options={{
             // title: 'All Categories',
-            headerShown :false
+            headerShown: false
           }} />
-          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} 
+          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen}
           // options={({route , navigation})=>{
           //   const catId = route.params.categoryId
           // }}
 
           />
-           <Stack.Screen name="MealsDetail" component={MealDetailScreen} options={{
+          <Stack.Screen name="MealsDetail" component={MealDetailScreen} options={{
             title: 'Meal Detail',
             contentStyle: {
               backgroundColor: 'white'
@@ -76,13 +78,14 @@ export default function App() {
           }} />
         </Stack.Navigator>
       </NavigationContainer>
+      </FavouritesContextProvider>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-    a :{
-      fontSize:500,
-      color : 'white'
-    }
+  a: {
+    fontSize: 500,
+    color: 'white'
+  }
 });
