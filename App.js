@@ -1,3 +1,4 @@
+import "react-native-gesture-handler"
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import CategoryScreen from './screens/CategoryScreen';
@@ -7,14 +8,37 @@ import { NavigationContainer } from '@react-navigation/native';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import FavouritesScreen from './screens/FavouritesScreen';
+import { Ionicons } from '@expo/vector-icons'; 
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
 
 const DrawerNavigator =()=>{
-  return <Drawer.Navigator>
-    <Drawer.Screen name='Categories' component={CategoryScreen}/>
-    <Drawer.Screen name='Favourites' component={FavouritesScreen}/>
+  return <Drawer.Navigator screenOptions={{
+    headerStyle: { backgroundColor: 'black' },
+    headerTintColor: 'white',
+    sceneContainerStyle : {
+      backgroundColor: 'black'
+    },
+    drawerContentStyle : {
+      backgroundColor :'black',
+    },
+    drawerInactiveTintColor :'white',
+    drawerActiveTintColor :'black',
+    drawerActiveBackgroundColor :'white'
+
+
+  }}>
+    <Drawer.Screen name='Categories' component={CategoryScreen} options={{
+    title :'All Categories',
+    drawerIcon :({color ,size})=> <Ionicons name="list" size={size} color={color} />
+    }}/>
+    <Drawer.Screen name='Favourites' component={FavouritesScreen}
+    options={{
+      title :'Favourites',
+      drawerIcon :({color ,size})=> <Ionicons name="star" size={size} color={color} />
+      }}
+      />
   </Drawer.Navigator>
 }
 
@@ -32,6 +56,7 @@ export default function App() {
         }}>
           <Stack.Screen name="Drawer" component={DrawerNavigator} options={{
             // title: 'All Categories',
+            headerShown :false
           }} />
           <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} 
           // options={({route , navigation})=>{
@@ -56,5 +81,8 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-
+    a :{
+      fontSize:500,
+      color : 'white'
+    }
 });
